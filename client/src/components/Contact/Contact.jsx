@@ -1,0 +1,122 @@
+import React, { useState } from "react";
+import "./Contact.css";
+import { MdCall } from "react-icons/md";
+import { BsFillChatDotsFill } from "react-icons/bs";
+import {HiChatBubbleBottomCenter} from 'react-icons/hi2'
+const Contact = () => {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+  const canSend = form.name.trim() && form.email.trim() && form.message.trim();
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    if(!canSend) return;
+    setSent(true);
+    setTimeout(()=> setSent(false), 4000);
+  }
+  return (
+    <div id="contact-us" className="c-wrapper">
+      <div className="paddings innerWidth flexCenter c-container">
+        {/* left side */}
+        <div className="flexColStart c-left">
+          <span className="orangeText">Our Contact Us</span>
+          <span className="primaryText">Easy to contact us</span>
+          <span className="secondaryText">
+            We always ready to help by providijng the best services for you. We
+            beleive a good blace to live can make your life better{" "}
+          </span>
+
+          <div className="flexColStart contactModes">
+            {/* first row */}
+            <div className="flexStart row">
+              <div className="flexColCenter mode">
+                <div className="flexStart">
+                  <div className="flexCenter icon">
+                    <MdCall size={25} />
+                  </div>
+                  <div className="flexColStart detail">
+                    <span className="primaryText">Call</span>
+                    <span className="secondaryText">021 123 145 14</span>
+                  </div>
+                </div>
+                <div className="flexCenter button">Call now</div>
+              </div>
+
+              <div className="flexColCenter mode">
+                <div className="flexStart">
+                  <div className="flexCenter icon">
+                    <BsFillChatDotsFill size={25} />
+                  </div>
+                  <div className="flexColStart detail">
+                    <span className="primaryText">Chat</span>
+                    <span className="secondaryText">021 123 145 14</span>
+                  </div>
+                </div>
+                <div className="flexCenter button">Chat now</div>
+              </div>
+            </div>
+
+            {/* second row */}
+            <div className="flexStart row">
+              <div className="flexColCenter mode">
+                <div className="flexStart">
+                  <div className="flexCenter icon">
+                    <BsFillChatDotsFill size={25} />
+                  </div>
+                  <div className="flexColStart detail">
+                    <span className="primaryText">Video Call</span>
+                    <span className="secondaryText">021 123 145 14</span>
+                  </div>
+                </div>
+                <div className="flexCenter button">Video Call now</div>
+              </div>
+
+              <div className="flexColCenter mode">
+                <div className="flexStart">
+                  <div className="flexCenter icon">
+                    <HiChatBubbleBottomCenter size={25} />
+                  </div>
+                  <div className="flexColStart detail">
+                    <span className="primaryText">Message</span>
+                    <span className="secondaryText">021 123 145 14</span>
+                  </div>
+                </div>
+                <div className="flexCenter button">Message now</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* right side: simple contact form */}
+        <div className="flexEnd c-right">
+          <form onSubmit={handleSubmit} style={{display:"grid", gap:12, width: "100%", maxWidth: 420}}>
+            <input
+              placeholder="Your name"
+              value={form.name}
+              onChange={(e)=> setForm({...form, name:e.target.value})}
+              style={{padding:12, borderRadius:8, border:"1px solid #ddd"}}
+            />
+            <input
+              placeholder="Your email"
+              type="email"
+              value={form.email}
+              onChange={(e)=> setForm({...form, email:e.target.value})}
+              style={{padding:12, borderRadius:8, border:"1px solid #ddd"}}
+            />
+            <textarea
+              placeholder="How can we help?"
+              rows={5}
+              value={form.message}
+              onChange={(e)=> setForm({...form, message:e.target.value})}
+              style={{padding:12, borderRadius:8, border:"1px solid #ddd", resize:"vertical"}}
+            />
+            <button className="button" disabled={!canSend} type="submit">
+              {sent ? "Sent!" : "Send message"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;

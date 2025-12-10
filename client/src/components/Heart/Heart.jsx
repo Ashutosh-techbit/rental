@@ -9,7 +9,6 @@ import { toFav } from "../../utils/api"
 
 const Heart = ({id}) => {
 
-    const [heartColor, setHeartColor] = useState("white")
     const {validateLogin} = useAuthCheck()
     const {user} = useAuth0()
 
@@ -18,10 +17,8 @@ const Heart = ({id}) => {
         setUserDetails,
       } = useContext(UserDetailContext);
 
-      useEffect(()=> {
-            setHeartColor(()=> checkFavourites(id, favourites))
-      },[favourites])
-
+      // Derive heart color from context, not local state
+      const heartColor = checkFavourites(id, favourites)
 
     const {mutate} = useMutation({
         mutationFn: () => toFav(id, user?.email, token),
@@ -39,7 +36,6 @@ const Heart = ({id}) => {
         if(validateLogin())
         {
             mutate()
-            setHeartColor((prev)=> prev === "#fa3e5f" ? "white": "#fa3e5f")
         }
     }
 
